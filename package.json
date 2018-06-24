@@ -1,0 +1,33 @@
+{
+  "name": "express-error-by-type",
+  "version": "0.0.0",
+  "description": "Simple, unopinionated error middleware to simplify handling errors based on their class.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesdavpet/express-error-by-type.git"
+  },
+  "keywords": [
+    "express",
+    "error",
+    "type",
+    "handler",
+    "middleware"
+  ],
+  "author": "Jesse David Peterson <@jesdavpet>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jesdavpet/express-error-by-type/issues"
+  },
+  "homepage": "https://github.com/jesdavpet/express-error-by-type#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "express": "^4.16.3",
+    "husky": "^0.14.3",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0"
+  }
+}
