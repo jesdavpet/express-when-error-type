@@ -10,7 +10,7 @@ const newError = new Error('WHOOPS!')
 const throwNewError = () => { throw newError }
 const identity = x => x
 const mockHandlerResult = 'CALLED'
-const mockHandler = (error, request, response, next) => mockHandlerResult
+const mockHandler = (error, request = {}, response = {}, next = noop) => mockHandlerResult
 
 class MockCustomError extends Error {}
 class MockMismatchError extends Error {}
@@ -70,17 +70,24 @@ describe('Middleware', () => {
     expect(errorHandlerResult).to.equal(newError)
   })
 
-  it('should throw on instantiation when not provided with an actual error', () => {
+  it('should throw on instantiation when not provided with an error constructor', () => {
     const instantiateMiddlewareFail = () =>
-      errorOfTypeMiddleware({ not: 'error' }, mockHandler)
+          errorOfTypeMiddleware({ not: 'error' }, mockHandler)
 
-    expect(instantiateMiddlewareFail()).to.throw()
+    expect(instantiateMiddlewareFail()).to.throw('ErrorType is not a constructor')
+  })
+
+  it('should throw on instantiation when not provided with a constructor for a class that does not extend Error', () => {
+    const instantiateMiddlewareFail = () =>
+      errorOfTypeMiddleware(Date, mockHandler)
+
+    expect(instantiateMiddlewareFail()).to.throw('ErrorType provided is not an Error class')
   })
 
   it('should throw on instantiation when not provided with a handler function', () => {
     const instantiateMiddlewareFail = () =>
       errorOfTypeMiddleware(MockCustomError, { not: 'function' })
 
-    expect(instantiateMiddlewareFail()).to.throw()
+    expect(instantiateMiddlewareFail()).to.throw('A handler must be a Function')
   })
 })
