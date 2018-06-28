@@ -1,6 +1,6 @@
 {
-  "name": "express-error-by-type",
-  "version": "0.0.0",
+  "name": "express-when-error-type",
+  "version": "0.0.1",
   "description": "Simple, unopinionated error middleware to simplify handling errors based on their class.",
   "main": "./src/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jesdavpet/express-error-by-type.git"
+    "url": "git+https://github.com/jesdavpet/express-when-error-type.git"
   },
   "keywords": [
     "express",
@@ -23,9 +23,9 @@
   "author": "Jesse David Peterson <@jesdavpet>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jesdavpet/express-error-by-type/issues"
+    "url": "https://github.com/jesdavpet/express-when-error-type/issues"
   },
-  "homepage": "https://github.com/jesdavpet/express-error-by-type#readme",
+  "homepage": "https://github.com/jesdavpet/express-when-error-type#readme",
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-spies": "^1.0.0",
