@@ -1,2 +1,2 @@
-module.exports = require('./errorOfTypeMiddleware')
+module.exports = require('./whenErrorTypeMiddleware')
 

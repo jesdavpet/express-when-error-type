@@ -1,10 +1,9 @@
 const { expect } = require('chai')
 
-const errorOfType = require('./index')
+const whenErrorType = require('./index')
 
 describe('Package', () => {
   it('should export middleware by default', () => {
-    expect(errorOfType).not.to.be.undefined
-    expect(errorOfType).to.be.a('function')
+    expect(whenErrorType).to.be.a('function')
   })
 })

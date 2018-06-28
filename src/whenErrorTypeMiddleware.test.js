@@ -3,7 +3,7 @@ const spies = require('chai-spies')
 chai.use(spies)
 const { expect } = chai
 
-const errorOfTypeMiddleware = require('./errorOfTypeMiddleware')
+const whenErrorTypeMiddleware = require('./whenErrorTypeMiddleware')
 
 const noop = () => {}
 const newError = new Error('WHOOPS!')
@@ -17,14 +17,14 @@ class MockMismatchError extends Error {}
 
 describe('Middleware', () => {
   it('should return a function when instantiated', () => {
-    const instantiatedMiddleware = errorOfTypeMiddleware(MockCustomError, noop)
+    const instantiatedMiddleware = whenErrorTypeMiddleware(MockCustomError, noop)
 
     expect(instantiatedMiddleware).to.be.a('function')
   })
 
   it('should NOT call next(...), but should call handler when error class matches', () => {
     const spyNext = chai.spy(noop)
-    const instantiatedMiddleware = errorOfTypeMiddleware(MockCustomError, mockHandler)
+    const instantiatedMiddleware = whenErrorTypeMiddleware(MockCustomError, mockHandler)
 
     const errorHandlerResult = instantiatedMiddleware(
       new MockCustomError('MESSAGE'), {}, {}, spyNext
@@ -36,7 +36,7 @@ describe('Middleware', () => {
 
   it('should call next(...), but should NOT call handler when error class does not match', () => {
     const spyNext = chai.spy(noop)
-    const instantiatedMiddleware = errorOfTypeMiddleware(MockCustomError, mockHandler)
+    const instantiatedMiddleware = whenErrorTypeMiddleware(MockCustomError, mockHandler)
 
     const errorHandlerResult = instantiatedMiddleware(
       new MockMismatchError('MESSAGE'), {}, {}, spyNext
@@ -48,7 +48,7 @@ describe('Middleware', () => {
 
   it('should always call handler when instantiated with base Error class', () => {
     const spyNext = chai.spy(noop)
-    const instantiatedMiddleware = errorOfTypeMiddleware(Error, mockHandler)
+    const instantiatedMiddleware = whenErrorTypeMiddleware(Error, mockHandler)
 
     const errorHandlerResult = instantiatedMiddleware(
       new MockCustomError('MESSAGE'), {}, {}, spyNext
@@ -60,7 +60,7 @@ describe('Middleware', () => {
 
   it('should catch and next(...) the error, when the handler provided is broken and throws', () => {
     const spyNext = chai.spy(identity)
-    const instantiatedMiddleware = errorOfTypeMiddleware(MockCustomError, throwNewError)
+    const instantiatedMiddleware = whenErrorTypeMiddleware(MockCustomError, throwNewError)
 
     const errorHandlerResult = instantiatedMiddleware(
       new MockCustomError('MESSAGE'), {}, {}, spyNext
@@ -72,21 +72,21 @@ describe('Middleware', () => {
 
   it('should throw on instantiation when not provided with an error constructor', () => {
     const instantiateMiddlewareFail = () =>
-          errorOfTypeMiddleware({ not: 'error' }, mockHandler)
+          whenErrorTypeMiddleware({ not: 'error' }, mockHandler)
 
     expect(instantiateMiddlewareFail()).to.throw('ErrorType is not a constructor')
   })
 
   it('should throw on instantiation when not provided with a constructor for a class that does not extend Error', () => {
     const instantiateMiddlewareFail = () =>
-      errorOfTypeMiddleware(Date, mockHandler)
+      whenErrorTypeMiddleware(Date, mockHandler)
 
     expect(instantiateMiddlewareFail()).to.throw('ErrorType provided is not an Error class')
   })
 
   it('should throw on instantiation when not provided with a handler function', () => {
     const instantiateMiddlewareFail = () =>
-      errorOfTypeMiddleware(MockCustomError, { not: 'function' })
+      whenErrorTypeMiddleware(MockCustomError, { not: 'function' })
 
     expect(instantiateMiddlewareFail()).to.throw('A handler must be a Function')
   })
